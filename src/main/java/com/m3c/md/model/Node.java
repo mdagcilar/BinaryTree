@@ -31,15 +31,15 @@ public class Node {
         this.rightChild = rightChild;
     }
 
-    public boolean isLeftChildEmpty(){
-        if (leftChild == null){
+    public boolean isLeftChildEmpty() {
+        if (leftChild == null) {
             return true;
         }
         return false;
     }
 
-    public boolean isRightChildEmpty(){
-        if (rightChild == null){
+    public boolean isRightChildEmpty() {
+        if (rightChild == null) {
             return true;
         }
         return false;

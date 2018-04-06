@@ -3,15 +3,14 @@ package com.m3c.md.model;
 import com.m3c.md.controller.ElementNotFoundException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class BinaryTreeImpl implements BinaryTree {
 
     private Node root;
     private int numberOfNodes = 1;
-    private List<Integer> sortedTreeDesc = new ArrayList<Integer>();
     private List<Integer> sortedTreeAsc = new ArrayList<Integer>();
+    private List<Integer> sortedTreeDesc = new ArrayList<Integer>();
 
     public BinaryTreeImpl(int rootValue) {
         root = new Node(rootValue);
@@ -74,11 +73,13 @@ public class BinaryTreeImpl implements BinaryTree {
     }
 
     public List<Integer> getSortedTreeAsc() {
-        return getSortedTreeAscHelper(root);
+        getSortedTreeAscHelper(root);
+        return sortedTreeAsc;
     }
 
     public List<Integer> getSortedTreeDesc() {
-        return getSortedTreeDescHelper(root);
+        getSortedTreeDescHelper(root);
+        return sortedTreeDesc;
     }
 
     /**
@@ -128,25 +129,19 @@ public class BinaryTreeImpl implements BinaryTree {
      * @param node
      * @return
      */
-    private List<Integer> getSortedTreeAscHelper(Node node) {
-
+    private void getSortedTreeAscHelper(Node node) {
         if (node != null) {
             getSortedTreeAscHelper(node.getLeftChild());
             sortedTreeAsc.add(node.getValue());
             getSortedTreeAscHelper(node.getRightChild());
         }
-        return sortedTreeAsc;
     }
 
-    private List<Integer> getSortedTreeDescHelper(Node node) {
-        List<Integer> sortedTree = new ArrayList<Integer>();
-
-        if (!node.isRightChildEmpty()) {
-            getSortedTreeAscHelper(node.getRightChild());
-            sortedTree.add(node.getValue());
-            getSortedTreeAscHelper(node.getLeftChild());
+    private void getSortedTreeDescHelper(Node node) {
+        if (node != null) {
+            getSortedTreeDescHelper(node.getRightChild());
+            sortedTreeDesc.add(node.getValue());
+            getSortedTreeDescHelper(node.getLeftChild());
         }
-
-        return sortedTreeDesc;
     }
 }
