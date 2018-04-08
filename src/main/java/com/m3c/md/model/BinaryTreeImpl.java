@@ -123,7 +123,7 @@ public class BinaryTreeImpl implements BinaryTree {
             Node node = findNode(root, element);
             return node.getLeftChild().getValue();
         }
-        throw new ElementNotFoundException("Left child not found");
+        throw new ElementNotFoundException("Left child of element: " + element + " not found");
     }
 
     /**
@@ -138,7 +138,7 @@ public class BinaryTreeImpl implements BinaryTree {
             Node node = findNode(root, element);
             return node.getRightChild().getValue();
         }
-        throw new ElementNotFoundException("Right child not found");
+        throw new ElementNotFoundException("Right child of element: " + element + " not found");
     }
 
     // Returns a sorted list of the BinaryTree in ascending order

@@ -119,30 +119,41 @@ public class BinaryTreeImplTest {
     }
 
     @Test
-    public void getLeftChild() {
+    public void getLeftChild() throws ElementNotFoundException {
         binaryTree.addElement(4);
         binaryTree.addElement(8);
         binaryTree.addElement(7);
 
-        try {
-            assertEquals(binaryTree.getLeftChild(5), 4);
-        } catch (ElementNotFoundException e) {
-            e.printStackTrace();
-        }
+        assertEquals(4, binaryTree.getLeftChild(5));
+    }
+
+    @Test(expected = ElementNotFoundException.class)
+    public void getLeftChildElementNotFound() throws ElementNotFoundException {
+        binaryTree.addElement(4);
+        binaryTree.addElement(8);
+        binaryTree.addElement(7);
+
+        binaryTree.getLeftChild(12);
     }
 
     @Test
-    public void getRightChild() {
+    public void getRightChild() throws ElementNotFoundException {
         binaryTree.addElement(4);
         binaryTree.addElement(8);
         binaryTree.addElement(7);
 
-        try {
-            assertEquals(binaryTree.getRightChild(5), 8);
-        } catch (ElementNotFoundException e) {
-            e.printStackTrace();
-        }
+        assertEquals(8, binaryTree.getRightChild(5));
     }
+
+    @Test(expected = ElementNotFoundException.class)
+    public void getRightChildElementNotFound() throws ElementNotFoundException {
+        binaryTree.addElement(4);
+        binaryTree.addElement(8);
+        binaryTree.addElement(7);
+
+        binaryTree.getRightChild(14);
+    }
+
 
     @Test
     public void getSortedTreeAsc() {
@@ -183,4 +194,5 @@ public class BinaryTreeImplTest {
 
         assertEquals(expected, binaryTree.getSortedTreeDesc());
     }
+
 }
