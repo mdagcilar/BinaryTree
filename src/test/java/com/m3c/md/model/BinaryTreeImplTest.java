@@ -2,7 +2,6 @@ package com.m3c.md.model;
 
 import com.m3c.md.controller.ElementNotFoundException;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -15,17 +14,18 @@ public class BinaryTreeImplTest {
     private static BinaryTree binaryTree;
 
     /**
-     * Initialise the BinaryTree with a root element 5.
+     * Initialise the BinaryTree with a root element of 5.
      */
     @Before
     public void setup() {
         binaryTree = new BinaryTreeImpl(5);
     }
 
+    // Testing the value is correct for the getRootElement() method
     @Test
     public void getRootElement() {
-        Node root = new Node(7);
-        assertEquals(7, root.getValue());
+        binaryTree = new BinaryTreeImpl(8);
+        assertEquals(8, binaryTree.getRootElement());
     }
 
     @Test
@@ -37,7 +37,19 @@ public class BinaryTreeImplTest {
     }
 
     @Test
+    public void getNumberOfElementsRoot() {
+        assertEquals(1, binaryTree.getNumberOfElements());
+    }
+
+    @Test
     public void addElement() {
+        assertEquals(1, binaryTree.getNumberOfElements());
+        binaryTree.addElement(4);
+        assertEquals(2, binaryTree.getNumberOfElements());
+    }
+
+    @Test
+    public void addElementNull() {
         assertEquals(1, binaryTree.getNumberOfElements());
         binaryTree.addElement(4);
         assertEquals(2, binaryTree.getNumberOfElements());
@@ -46,13 +58,33 @@ public class BinaryTreeImplTest {
     @Test
     public void addElements() {
         int[] elements = {4, 7, 8};
-        binaryTree.addElements(elements);
-        String s = "abs";
-        s.hashCode();
-        System.identityHashCode(s);
 
+        assertEquals(1, binaryTree.getNumberOfElements());
+        binaryTree.addElements(elements);
+        assertEquals(4, binaryTree.getNumberOfElements());
     }
 
+    @Test
+    public void addElementsLargeTree() throws ElementNotFoundException {
+        int[] elements = {4, 7, 8, 3, 4, 1, 9, 12, 2, 14, 6, 7, 11, 20, 0};
+
+        assertEquals(1, binaryTree.getNumberOfElements());
+        binaryTree.addElements(elements);
+        assertEquals(16, binaryTree.getNumberOfElements());
+
+        assertEquals(14, binaryTree.getRightChild(12));
+        assertEquals(2, binaryTree.getRightChild(1));
+        assertEquals(3, binaryTree.getLeftChild(4));
+        assertEquals(6, binaryTree.getLeftChild(7));
+    }
+
+    // Finds the first element in the Tree
+    @Test
+    public void findElementRoot() {
+        assertEquals(true, binaryTree.findElement(5));
+    }
+
+    // Finds an element in the Tree
     @Test
     public void findElement() {
         binaryTree.addElement(4);
@@ -63,8 +95,21 @@ public class BinaryTreeImplTest {
         assertEquals(true, binaryTree.findElement(4));
     }
 
+    // Finds the leaf Node
     @Test
-    public void elementDoesNotExist() {
+    public void findElementLeafChild() {
+        binaryTree.addElement(4);
+        binaryTree.addElement(3);
+        binaryTree.addElement(2);
+        binaryTree.addElement(1);
+        binaryTree.addElement(0);
+
+        assertEquals(true, binaryTree.findElement(0));
+    }
+
+    // Asserts false for an element that does not exist in the tree
+    @Test
+    public void findElementDoesNotExist() {
         binaryTree.addElement(4);
         binaryTree.addElement(8);
         binaryTree.addElement(7);
@@ -113,6 +158,12 @@ public class BinaryTreeImplTest {
     }
 
     @Test
+    public void getSortedTreeAscRoot() {
+        List<Integer> expected = Arrays.asList(5);
+        assertEquals(expected, binaryTree.getSortedTreeAsc());
+    }
+
+    @Test
     public void getSortedTreeDesc() {
         binaryTree.addElement(4);
         binaryTree.addElement(8);
@@ -122,6 +173,14 @@ public class BinaryTreeImplTest {
         binaryTree.addElement(9);
 
         List<Integer> expected = Arrays.asList(9, 8, 7, 5, 4, 3, 2);
+        assertEquals(expected, binaryTree.getSortedTreeDesc());
+    }
+
+    @Test
+    public void getSortedTreeDescRoot() {
+        binaryTree = new BinaryTreeImpl(2);
+        List<Integer> expected = Arrays.asList(2);
+
         assertEquals(expected, binaryTree.getSortedTreeDesc());
     }
 }
